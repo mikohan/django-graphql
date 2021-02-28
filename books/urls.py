@@ -4,5 +4,5 @@ from books.schema import schema
 
 urlpatterns = [
     # ...
-    path("graphql", GraphQLView.as_view(graphiql=True)),
+    path("graphql", GraphQLView.as_view(graphiql=True, schema=schema)),
 ]
