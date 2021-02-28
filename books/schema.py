@@ -10,7 +10,7 @@ class BooksType(DjangoObjectType):
 
 
 class Query(graphene.ObjectType):
-    ass_books = graphene.List(BooksType)
+    all_books = graphene.List(BooksType)
 
 
 schema = graphene.Schema(query=Query)
