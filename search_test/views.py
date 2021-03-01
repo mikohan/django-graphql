@@ -16,10 +16,7 @@ class SearchView(TemplateView):
             posts = [{"title": "Not founda", "image": None}]
         context = super().get_context_data(**kwargs)
         context["objects"] = posts
-        print(posts)
-        for post in posts:
-            print(post)
-        # context["json_objects"] = json.dumps(posts)
+        context["objects_qs"] = posts.to_queryset()
         return context
 
 

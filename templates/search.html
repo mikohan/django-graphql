@@ -17,6 +17,21 @@
 {% endfor %}
 </div>
 
+<hr />
+<div class="d-flex flex-row">
+{% for object in objects_qs %}
+      <div class="card" style="width: 18rem;">
+        <div>{{request.get_host}}</div>
+
+        <img src="{{ object.image.url }}" class="card-img-top" >
+        <div class="card-body">
+          <p class="card-text">
+            {{ object.title }}
+        </div>
+      </div>
+{% endfor %}
+</div>
+
 
 
 
