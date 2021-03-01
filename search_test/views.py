@@ -2,6 +2,7 @@ from django.views.generic.base import TemplateView
 from django.http import HttpResponse
 from .models import Post
 from .documents import PostDocument
+import json
 
 
 class SearchView(TemplateView):
@@ -15,6 +16,10 @@ class SearchView(TemplateView):
             posts = [{"title": "Not founda", "image": None}]
         context = super().get_context_data(**kwargs)
         context["objects"] = posts
+        print(posts)
+        for post in posts:
+            print(post)
+        # context["json_objects"] = json.dumps(posts)
         return context
 
 
