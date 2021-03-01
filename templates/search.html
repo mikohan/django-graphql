@@ -1,11 +1,13 @@
 {% extends "base.html" %} {% block content %}
+{% load static %}
+
 
 <h1>Content goes here</h1>
 
 {% for object in objects %}
 <div>{{ object.id }}</div>
 <div>{{ object.title }}</div>
-<div><img src="{% static object.image %}" /></div>
+<div><img src="{{ object.image.url }}" width="300" height="200" /></div>
 
 {% endfor %}
 
