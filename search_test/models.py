@@ -5,7 +5,11 @@ class Categories(models.Model):
 
     name = models.CharField(max_length=100)
     parent = models.ForeignKey(
-        "self", on_delete=models.DO_NOTHING, related_name="parent_reverce"
+        "self",
+        on_delete=models.DO_NOTHING,
+        related_name="parent_reverce",
+        null=True,
+        blank=True,
     )
 
     def __str__(self):
@@ -18,6 +22,9 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to="posts")
+
+    def __str__(self):
+        return f"{self.title}-{self.category.name}"
 
 
 # Create your models here.
