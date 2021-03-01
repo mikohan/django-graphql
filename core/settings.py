@@ -42,7 +42,11 @@ INSTALLED_APPS = [
     "graphene_django",
     "books",
     "quiz",
+    "search_test",
+    "django_elasticsearch_dsl",
 ]
+
+ELASTICSEARCH_DSL = {"default": {"hosts": "localhost:9200"}}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
