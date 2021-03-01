@@ -7,7 +7,10 @@ from .models import Categories, GoodsCategories, Post, Good
 class PostDocument(Document):
 
     category = fields.ObjectField(
-        properties={"name": fields.TextField(), "id": fields.IntegerField()}
+        properties={
+            "name": fields.TextField(),
+            "id": fields.IntegerField(),
+        }
     )
 
     class Index:
@@ -21,6 +24,14 @@ class PostDocument(Document):
 
     def get_queryset(self):
         return super().get_queryset().select_related("category")
+
+    def get_instances_from_related(self, related_instance):
+        """If related_models is set, define how to retrieve the Car instance(s) from the related model.
+        The related_models option should be used with caution because it can lead in the index
+        to the updating of a lot of items.
+        """
+        if isinstance(related_instance, Categories):
+            return related_instance.post_set.all()
 
 
 @registry.register_document
