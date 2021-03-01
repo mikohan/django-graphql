@@ -1,0 +1,15 @@
+{% extends "base.html" %} {% block content %}
+
+<h1>Content goes here</h1>
+
+{% for object in objects %}
+<div>{{ object.id }}</div>
+<div>{{ object.title }}</div>
+<div><img src="{% static object.image %}" /></div>
+
+{% endfor %}
+
+
+
+
+{% endblock content %}
