@@ -1,7 +1,7 @@
 from django_elasticsearch_dsl import DocType, Index
 from .models import Post
 
-posts = Index("posts")
+posts = Index("dnago_posts")
 
 
 @posts.doc_type

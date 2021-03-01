@@ -11,6 +11,7 @@ class Categories(models.Model):
         null=True,
         blank=True,
     )
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
         return self.name
@@ -22,6 +23,7 @@ class Post(models.Model):
     title = models.CharField(max_length=100)
     description = models.TextField()
     image = models.ImageField(upload_to="posts")
+    slug = models.SlugField(blank=True)
 
     def __str__(self):
         return f"{self.title}-{self.category.name}"
