@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Categories, Post
+from .models import Categories, Post, Good, GoodsCategories
 
 
 @admin.register(Categories)
@@ -10,8 +10,23 @@ class CatAdmin(admin.ModelAdmin):
     ]
 
 
+@admin.register(GoodsCategories)
+class GoodsCatAdmin(admin.ModelAdmin):
+    list_display = [
+        "name",
+    ]
+
+
 @admin.register(Post)
-class QuizAdmin(admin.ModelAdmin):
+class PostAdmin(admin.ModelAdmin):
+    list_display = [
+        "id",
+        "title",
+    ]
+
+
+@admin.register(Good)
+class GoodAdmin(admin.ModelAdmin):
     list_display = [
         "id",
         "title",
