@@ -30,10 +30,10 @@ class AnswerType(DjangoObjectType):
 
 class Query(graphene.ObjectType):
 
-    quiz = graphene.String()
+    all_quizzes = DjangoListField(QuizzesType)
 
-    def resolve_quiz():
-        return f"This is first question"
+    def resolve_quiz(root, info):
+        return Quizzes.objects.all()
 
     all_questions = graphene.Field(QuestionType, id=graphene.Int())
     all_answers = graphene.List(AnswerType, id=graphene.Int())
