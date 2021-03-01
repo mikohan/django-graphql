@@ -17,4 +17,8 @@ from django.contrib import admin
 from django.urls import path
 from django.urls.conf import include
 
-urlpatterns = [path("admin/", admin.site.urls), path("books/", include("books.urls"))]
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("books/", include("books.urls")),
+    path("quiz/", include("quiz.urls")),
+]
