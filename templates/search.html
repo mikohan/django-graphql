@@ -1,14 +1,17 @@
 {% extends "base.html" %} {% block content %}
 {% load static %}
 
-<h1>Content goes here</h1>
-
+<div class="d-flex flex-row">
 {% for object in objects %}
-<div>{{ object.id }}</div>
-<div>{{ object.title }}</div>
-<div><img class="img-thumbnail" src="{{ object.image.url }}" width="300" height="200" /></div>
-
+      <div class="card" style="width: 18rem;">
+        <img src="{{ object.image.url }}" class="card-img-top" >
+        <div class="card-body">
+          <p class="card-text">
+            {{ object.title }}
+        </div>
+      </div>
 {% endfor %}
+</div>
 
 
 
