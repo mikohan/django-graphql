@@ -3,12 +3,6 @@ from elasticsearch_dsl import analyzer, tokenizer
 from django_elasticsearch_dsl.registries import registry
 from .models import Categories, GoodsCategories, Post, Good, Sortpos
 
-my_analyzer = analyzer(
-    "rebuilt_russian",
-    tokenizer="standard",
-    filter=["lowercase", "russian_stop", "russian_keywords", "russian_stemmer"],
-)
-
 
 @registry.register_document
 class PostDocument(Document):
@@ -60,11 +54,19 @@ class GoodDocument(Document):
         return super().get_queryset().select_related("category")
 
 
+my_analyzer = analyzer(
+    "rebuilt_russian",
+    tokenizer="standard",
+    filter=["lowercase", "russian_stop", "russian_keywords", "russian_stemmer"],
+)
+
+
 @registry.register_document
 class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
+    title = fields.Text(analyzer="standard", fields={"raw": fields.Keyword()})
 
     class Index:
         name = "twitter_posts"
