@@ -15,7 +15,7 @@ class PostDocument(Document):
 
     class Index:
         name = "posts_django"
-        ettings = {"number_of_shards": 1, "number_of_replicas": 0}
+        settings = {"number_of_shards": 1, "number_of_replicas": 0}
 
     class Django:
         model = Post
@@ -57,6 +57,29 @@ class GoodDocument(Document):
 class SortposDocument(Document):
     class Index:
         name = "twitter_posts"
+        settings = {
+            "analysis": {
+                "filter": {
+                    "russian_stop": {"type": "stop", "stopwords": "_russian_"},
+                    "russian_keywords": {
+                        "type": "keyword_marker",
+                        "keywords": ["пример"],
+                    },
+                    "russian_stemmer": {"type": "stemmer", "language": "russian"},
+                },
+                "analyzer": {
+                    "rebuilt_russian": {
+                        "tokenizer": "standard",
+                        "filter": [
+                            "lowercase",
+                            "russian_stop",
+                            "russian_keywords",
+                            "russian_stemmer",
+                        ],
+                    }
+                },
+            }
+        }
 
     class Django:
         model = Sortpos
