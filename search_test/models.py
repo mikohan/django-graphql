@@ -71,4 +71,13 @@ class Post(models.Model):
         return f"{self.title}-{self.category.name}"
 
 
+class Sortpos(models.Model):
+
+    tname = models.CharField(max_length=255)
+    ttext = models.TextField()
+
+    def __str__(self):
+        return self.tname
+
+
 # Create your models here.
