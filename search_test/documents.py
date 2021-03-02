@@ -1,6 +1,6 @@
 from django_elasticsearch_dsl import Document, fields
 from django_elasticsearch_dsl.registries import registry
-from .models import Categories, GoodsCategories, Post, Good
+from .models import Categories, GoodsCategories, Post, Good, Sortpos
 
 
 @registry.register_document
@@ -51,3 +51,13 @@ class GoodDocument(Document):
 
     def get_queryset(self):
         return super().get_queryset().select_related("category")
+
+
+@registry.register_document
+class SortposDocument(Document):
+    class Index:
+        name = "twitter_posts"
+
+    class Django:
+        model = Sortpos
+        fields = ["tname", "ttext"]
