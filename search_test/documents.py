@@ -101,3 +101,4 @@ class SortposDocument(Document):
 
 
 # Add some plan
+# 1. Learn all elastic search
