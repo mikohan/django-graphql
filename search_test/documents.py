@@ -105,4 +105,3 @@ class SortposDocument(Document):
 # 2. Try to implement dsl
 # 3. Try to bound graphql to elasticsearch
 # 4. Configure API right way
-# 4. Configure API right way
