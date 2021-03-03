@@ -66,7 +66,7 @@ class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
-    title = fields.Text(analyzer="standard", fields={"raw": fields.Keyword()})
+    tname = fields.Text(analyzer="standard", fields={"raw": fields.Keyword()})
 
     class Index:
         name = "twitter_posts"
@@ -97,4 +97,7 @@ class SortposDocument(Document):
 
     class Django:
         model = Sortpos
-        fields = ["tname", "ttext"]
+        fields = ["ttext"]
+
+
+# Add some plan
