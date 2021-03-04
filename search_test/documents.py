@@ -1,7 +1,7 @@
-from django_elasticsearch_dsl import Document, fields
 from elasticsearch_dsl import analyzer, tokenizer
 from django_elasticsearch_dsl.registries import registry
 from .models import Categories, GoodsCategories, Post, Good, Sortpos
+from django_elasticsearch_dsl import Document, Index, fields
 
 
 @registry.register_document
@@ -66,15 +66,12 @@ class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
-    ttext = fields.Text(
+    ttext = fields.ObjectField(
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
-    tname = fields.Text(
+    tname = fields.ObjectField(
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
-
-    def prepare_ttext(self, instance):
-        return " ".join(instance.ttext)
 
     class Index:
         name = "twitter_posts"
