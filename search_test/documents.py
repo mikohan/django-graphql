@@ -66,7 +66,7 @@ class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
-    tname = fields.Text(
+    ttext = fields.Text(
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
 
@@ -104,7 +104,7 @@ class SortposDocument(Document):
 
     class Django:
         model = Sortpos
-        fields = ["ttext"]
+        fields = ["tname"]
 
 
 # Add some plan
