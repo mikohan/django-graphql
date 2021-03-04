@@ -66,10 +66,10 @@ class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
-    ttext = fields.ObjectField(
+    ttext = fields.TextField(
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
-    tname = fields.ObjectField(
+    tname = fields.TextField(
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
 
