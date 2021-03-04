@@ -66,7 +66,9 @@ class SortposDocument(Document):
     # description = fields.TextField(
     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
     # )
-    tname = fields.Text(analyzer="standard", fields={"raw": fields.Keyword()})
+    tname = fields.Text(
+        analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
+    )
 
     class Index:
         name = "twitter_posts"
