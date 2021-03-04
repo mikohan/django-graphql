@@ -94,7 +94,6 @@ class SortposDocument(Document):
                             "russian_stop",
                             "russian_keywords",
                             "russian_stemmer",
-                            "ngram_filter",
                         ],
                     }
                 },
