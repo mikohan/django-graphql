@@ -80,6 +80,11 @@ class SortposDocument(Document):
                         "keywords": ["пример"],
                     },
                     "russian_stemmer": {"type": "stemmer", "language": "russian"},
+                    "ngram_filter": {
+                        "type": "edge_ngram",
+                        "min_ngram": 2,
+                        "max_ngram": 5,
+                    },
                 },
                 "analyzer": {
                     "rebuilt_russian": {
@@ -89,6 +94,7 @@ class SortposDocument(Document):
                             "russian_stop",
                             "russian_keywords",
                             "russian_stemmer",
+                            "ngram_filter",
                         ],
                     }
                 },
