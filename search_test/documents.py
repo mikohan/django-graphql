@@ -73,6 +73,9 @@ class SortposDocument(Document):
         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
     )
 
+    def prepare_ttext(self, instance):
+        return " ".join(instance.ttext)
+
     class Index:
         name = "twitter_posts"
 
