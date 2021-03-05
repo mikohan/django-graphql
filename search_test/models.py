@@ -85,4 +85,11 @@ class Sortpos(models.Model):
 
 
 class CategoriesMptt(MPTTModel):
-    pass
+
+    name = models.CharField(max_length=100)
+    parent = TreeForeignKey(
+        "self", on_delete=models.CASCADE, null=True, blank=True, related_name="children"
+    )
+
+    class MPTTMeta:
+        order_insertion_by = ["name"]
