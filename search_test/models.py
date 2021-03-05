@@ -1,5 +1,6 @@
 from django.db import models
 from django.template.defaultfilters import slugify
+from mptt.models import MPTTModel, TreeForeignKey
 
 
 class Categories(models.Model):
@@ -81,3 +82,7 @@ class Sortpos(models.Model):
 
 
 # Create your models here.
+
+
+class CategoriesMptt(MPTTModel):
+    pass

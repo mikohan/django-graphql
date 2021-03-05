@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "quiz",
     "search_test",
     "django_elasticsearch_dsl",
+    "mptt",
 ]
 
 ELASTICSEARCH_DSL = {
