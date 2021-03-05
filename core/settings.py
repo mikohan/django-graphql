@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "search_test",
     "django_elasticsearch_dsl",
     "mptt",
+    "django_mptt_admin",
 ]
 
 ELASTICSEARCH_DSL = {
