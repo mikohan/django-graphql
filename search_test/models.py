@@ -87,9 +87,18 @@ class Sortpos(models.Model):
 class CategoriesMptt(MPTTModel):
 
     name = models.CharField(max_length=100)
+    slug = models.SlugField(blank=True)
     parent = TreeForeignKey(
         "self", on_delete=models.CASCADE, null=True, blank=True, related_name="children"
     )
 
     class MPTTMeta:
         order_insertion_by = ["name"]
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
