@@ -106,7 +106,7 @@ class CategoriesMptt(MPTTModel):
 
 class ProductsMptt(models.Model):
     name = models.CharField(max_length=255)
-    slug = models.SlugField()
+    slug = models.SlugField(blank=True)
     parent = models.ForeignKey(CategoriesMptt, on_delete=models.DO_NOTHING)
 
     def save(self, *args, **kwargs):
