@@ -100,5 +100,16 @@ class CategoriesMptt(MPTTModel):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.title)
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+
+class ProductsMptt(models.Model):
+    name = models.CharField(max_length=255)
+    slug = models.SlugField()
+    parent = models.ForeignKey(CategoriesMptt, on_delete=models.DO_NOTHING)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
         super().save(*args, **kwargs)
