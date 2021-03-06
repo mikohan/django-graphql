@@ -1,13 +1,21 @@
 from elasticsearch_dsl import analyzer, tokenizer
 from django_elasticsearch_dsl.registries import registry
-from .models import Categories, GoodsCategories, Post, Good, Sortpos
+from .models import (
+    Categories,
+    CategoriesMptt,
+    GoodsCategories,
+    Post,
+    Good,
+    ProductsMptt,
+    Sortpos,
+)
 from django_elasticsearch_dsl import Document, Index, fields
 
 
 @registry.register_document
-class PostDocument(Document):
+class ProductsDocument(Document):
 
-    category = fields.ObjectField(
+    parent = fields.ObjectField(
         properties={
             "name": fields.TextField(),
             "id": fields.IntegerField(),
@@ -15,24 +23,24 @@ class PostDocument(Document):
     )
 
     class Index:
-        name = "posts_django"
+        name = "products"
         settings = {"number_of_shards": 1, "number_of_replicas": 0}
 
     class Django:
-        model = Post
-        fields = ["title", "id", "slug", "image", "description"]
-        related_models = [Categories]
+        model = ProductsMptt
+        fields = ["name", "id", "slug"]
+        related_models = [CategoriesMptt]
 
     def get_queryset(self):
-        return super().get_queryset().select_related("category")
+        return super().get_queryset().select_related("parent")
 
     def get_instances_from_related(self, related_instance):
         """If related_models is set, define how to retrieve the Car instance(s) from the related model.
         The related_models option should be used with caution because it can lead in the index
         to the updating of a lot of items.
         """
-        if isinstance(related_instance, Categories):
-            return related_instance.post_set.all()
+        if isinstance(related_instance, CategoriesMptt):
+            return related_instance.productmptt_set.all()
 
 
 @registry.register_document
