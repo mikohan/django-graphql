@@ -13,6 +13,16 @@ from django_elasticsearch_dsl import Document, Index, fields
 
 
 @registry.register_document
+class CategoriesDocument(Document):
+    class Index:
+        name = "catgories"
+
+    class Django:
+        model = CategoriesMptt
+        filds = ["name", "parent"]
+
+
+@registry.register_document
 class ProductsDocument(Document):
 
     parent = fields.ObjectField(
