@@ -21,6 +21,9 @@ class CategoriesDocument(Document):
         model = CategoriesMptt
         filds = ["name", "parent"]
 
+    def get_queryset(self):
+        return super().get_queryset().select_related("parent")
+
 
 @registry.register_document
 class ProductsDocument(Document):
@@ -79,52 +82,52 @@ my_analyzer = analyzer(
 )
 
 
-@registry.register_document
-class SortposDocument(Document):
-    # description = fields.TextField(
-    #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
-    # )
-    ttext = fields.TextField(
-        analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
-    )
-    tname = fields.TextField(
-        analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
-    )
+# @registry.register_document
+# class SortposDocument(Document):
+#     # description = fields.TextField(
+#     #     analyzer=my_analyzer, fields={"raw": fields.KeywordField()}
+#     # )
+#     ttext = fields.TextField(
+#         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
+#     )
+#     tname = fields.TextField(
+#         analyzer="rebuilt_russian", fields={"keyword": fields.Keyword()}
+#     )
 
-    class Index:
-        name = "twitter_posts"
+#     class Index:
+#         name = "twitter_posts"
 
-        settings = {
-            "analysis": {
-                "filter": {
-                    "russian_stop": {"type": "stop", "stopwords": "_russian_"},
-                    "russian_keywords": {
-                        "type": "keyword_marker",
-                        "keywords": ["пример"],
-                    },
-                    "russian_stemmer": {"type": "stemmer", "language": "russian"},
-                    "ngram_filter": {
-                        "type": "edge_ngram",
-                        "min_ngram": 2,
-                        "max_ngram": 5,
-                    },
-                },
-                "analyzer": {
-                    "rebuilt_russian": {
-                        "tokenizer": "standard",
-                        "filter": [
-                            "lowercase",
-                            "russian_stop",
-                            "russian_keywords",
-                            "russian_stemmer",
-                        ],
-                    }
-                },
-            }
-        }
+#         settings = {
+#             "analysis": {
+#                 "filter": {
+#                     "russian_stop": {"type": "stop", "stopwords": "_russian_"},
+#                     "russian_keywords": {
+#                         "type": "keyword_marker",
+#                         "keywords": ["пример"],
+#                     },
+#                     "russian_stemmer": {"type": "stemmer", "language": "russian"},
+#                     "ngram_filter": {
+#                         "type": "edge_ngram",
+#                         "min_ngram": 2,
+#                         "max_ngram": 5,
+#                     },
+#                 },
+#                 "analyzer": {
+#                     "rebuilt_russian": {
+#                         "tokenizer": "standard",
+#                         "filter": [
+#                             "lowercase",
+#                             "russian_stop",
+#                             "russian_keywords",
+#                             "russian_stemmer",
+#                         ],
+#                     }
+#                 },
+#             }
+#         }
 
-    class Django:
-        model = Sortpos
+#     class Django:
+#         model = Sortpos
 
 
 # Add some plan
