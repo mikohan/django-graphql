@@ -22,16 +22,29 @@ class IProduct(Interface):
     categories = List(ICategories)
 
 
+class CategoriesSource(ObjectType):
+
+    _id = ID()
+    _source = Field("Categories")
+
+
 class Categories(ObjectType):
-    cat_id = ID()
     cat_name = String()
     cat_parent = ID()
 
 
-class Product(ObjectType):
-    id = Int()
+class ProductSource(ObjectType):
+
     name = String()
-    categories = Field(Categories)
+    categories = Field(CategoriesSource)
+    # brand = Field(Brand)
+    # car_model = Field(CarModel)
+
+
+class Product(ObjectType):
+    _index = String(required=False)
+    _id = Int()
+    _source = Field(ProductSource)
 
 
 class Query(ObjectType):
@@ -65,7 +78,7 @@ class Query(ObjectType):
         response = r.json()
 
         result = response["hits"]["hits"]
-        print(result)
+        print(result[0])
 
         # request = Search(using=es, index="prod_notebook")
         # response = request.source(["id", "name"])
