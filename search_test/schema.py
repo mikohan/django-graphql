@@ -56,7 +56,7 @@ class ProductSource(ObjectType):
 
     name = String()
     categories = List(Cats)
-    brand = List(Brand)
+    brand = Field(Brand)
     car_model = List(CarModel)
     engines = List(Engines)
 
