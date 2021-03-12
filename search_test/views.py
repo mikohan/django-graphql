@@ -20,6 +20,8 @@ class SearchView(TemplateView):
 
 
 # Create your views here.
+# Plan for tomorrow
+# 1.
 
 
 def send_json(request):
