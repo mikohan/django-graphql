@@ -28,6 +28,11 @@ class SearchView(TemplateView):
 # 5. Design and create Stock model
 # 6. Start working with Front End
 
+# For Tomorrow
+# 1. Design and Create price model
+# 2. Desing and create Stock model
+# 4. Add all fields to model
+
 
 def send_json(request):
     query = request.GET.get("q")
