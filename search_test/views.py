@@ -23,6 +23,7 @@ class SearchView(TemplateView):
 # Plan for tomorrow
 # 1. Add fields to model
 # 2. Copy real data from Remoge table to local for testes
+# 3. Design and create calss for inserting data into Elasticsearch
 
 
 def send_json(request):
