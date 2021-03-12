@@ -43,7 +43,7 @@ class Cats(ObjectType):
 
 
 class Engines(ObjectType):
-    class Meata:
+    class Meta:
         interfaces = (IEngines,)
 
 
