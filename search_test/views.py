@@ -21,7 +21,8 @@ class SearchView(TemplateView):
 
 # Create your views here.
 # Plan for tomorrow
-# 1.
+# 1. Add fields to model
+# 2. Copy real data from Remoge table to local for testes
 
 
 def send_json(request):
