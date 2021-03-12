@@ -11,34 +11,36 @@ es = Elasticsearch(["http://localhost:9200"])
 
 
 class ICategories(Interface):
-    cat_parent = ID(required=True)
+    cat_id = ID(required=True)
     cat_name = String(required=True)
     cat_parent = ID(required=False)
 
 
-class IProduct(Interface):
-    id = ID(required=True)
-    name = String(required=True)
-    categories = List(ICategories)
+class ICarModels(Interface):
+    model_id = ID()
+    model_name = String()
 
 
-class CategoriesSource(ObjectType):
+class CarModel(ObjectType):
+    class Meta:
+        interfaces = (ICarModels,)
 
-    _id = ID()
-    _source = Field("Categories")
 
+class Cats(ObjectType):
+    class Meta:
+        interfaces = (ICategories,)
 
-class Categories(ObjectType):
-    cat_name = String()
-    cat_parent = ID()
+    # cat_id = Int()
+    # cat_name = String()
+    # cat_parent = ID()
 
 
 class ProductSource(ObjectType):
 
     name = String()
-    categories = Field(CategoriesSource)
-    # brand = Field(Brand)
-    # car_model = Field(CarModel)
+    categories = List(Cats)
+    # brand = List(Brand)
+    car_model = List(CarModel)
 
 
 class Product(ObjectType):
@@ -48,14 +50,12 @@ class Product(ObjectType):
 
 
 class Query(ObjectType):
-    class Meta:
-        interfaces = (ICategories, IProduct)
 
-    product = List(Product)
+    product = List(Product, query=String())
 
-    def resolve_product(root, info):
+    def resolve_product(root, info, query):
         data = json.dumps(
-            {"size": 10, "query": {"term": {"car_model.model_name.keyword": "HD72"}}}
+            {"size": 1000, "query": {"term": {"car_model.model_name.keyword": query}}}
         )
         # data_aggs = json.dumps(
         #     {
@@ -78,7 +78,7 @@ class Query(ObjectType):
         response = r.json()
 
         result = response["hits"]["hits"]
-        print(result[0])
+        print(result[0]["_source"]["car_model"])
 
         # request = Search(using=es, index="prod_notebook")
         # response = request.source(["id", "name"])
