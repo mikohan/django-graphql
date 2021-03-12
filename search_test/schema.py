@@ -124,11 +124,11 @@ class Query(ObjectType):
         )
         response = r.json()
 
-        result = response  # ["hits"]
+        products = response["hits"]["hits"]
         aggs = response["aggregations"]
         print(aggs)
 
-        return {"product": result, "aggregations": aggs}
+        return {"product": products, "aggregations": aggs}
 
     elastic = String()
 
