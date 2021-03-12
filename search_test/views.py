@@ -25,6 +25,7 @@ class SearchView(TemplateView):
 # 2. Copy real data from Remoge table to local for testes
 # 3. Design and create calss for inserting data into Elasticsearch
 # 4. Design and create Price model
+# 5. Design and create Stock model
 
 
 def send_json(request):
