@@ -16,9 +16,20 @@ class ICategories(Interface):
     cat_parent = ID(required=False)
 
 
+class IEngines(Interface):
+    engine_id = ID()
+    engine_name = String()
+
+
 class ICarModels(Interface):
     model_id = ID()
     model_name = String()
+
+
+class IBrand(Interface):
+    brand_id = ID()
+    brand_name = String()
+    brand_slug = String()
 
 
 class CarModel(ObjectType):
@@ -30,17 +41,24 @@ class Cats(ObjectType):
     class Meta:
         interfaces = (ICategories,)
 
-    # cat_id = Int()
-    # cat_name = String()
-    # cat_parent = ID()
+
+class Engines(ObjectType):
+    class Meata:
+        interfaces = (IEngines,)
+
+
+class Brand(ObjectType):
+    class Meta:
+        interfaces = (IBrand,)
 
 
 class ProductSource(ObjectType):
 
     name = String()
     categories = List(Cats)
-    # brand = List(Brand)
+    brand = List(Brand)
     car_model = List(CarModel)
+    engines = List(Engines)
 
 
 class Product(ObjectType):
@@ -78,7 +96,7 @@ class Query(ObjectType):
         response = r.json()
 
         result = response["hits"]["hits"]
-        print(result[0]["_source"]["car_model"])
+        print(result[0]["_source"]["engines"])
 
         # request = Search(using=es, index="prod_notebook")
         # response = request.source(["id", "name"])
