@@ -52,6 +52,30 @@ class Brand(ObjectType):
         interfaces = (IBrand,)
 
 
+## Start aggregations
+class IBucket(Interface):
+    key = String()
+    doc_count = Int()
+
+
+class Bucket(ObjectType):
+    class Meta:
+        interfaces = (IBucket,)
+
+
+class CarModelsAgg(ObjectType):
+    buckets = List(Bucket)
+
+
+class CategoriesAgg(ObjectType):
+    buckets = List(Bucket)
+
+
+class Aggregations(ObjectType):
+    car_models = List(CarModelsAgg)
+    categories = List(CategoriesAgg)
+
+
 class ProductSource(ObjectType):
 
     name = String()
@@ -67,43 +91,44 @@ class Product(ObjectType):
     _source = Field(ProductSource)
 
 
+class Root(ObjectType):
+    product = List(Product)
+    aggregations = Field(Aggregations)
+
+
 class Query(ObjectType):
 
-    product = List(Product, query=String())
+    root = Field(Root, query=String())
 
-    def resolve_product(root, info, query):
-        data = json.dumps(
-            {"size": 1000, "query": {"term": {"car_model.model_name.keyword": query}}}
-        )
-        # data_aggs = json.dumps(
-        #     {
-        #         "size": 1,
-        #         "query": {"match": {"categories.cat_parent": id}},
-        #         "aggs": {
-        #             "categories": {"terms": {"field": "categories.cat_name.keyword"}},
-        #             "brands": {"terms": {"field": "brand.brand_name.keyword"}},
-        #             "engines": {"terms": {"field": "engines.engine_name.keyword"}},
-        #             "car_models": {"terms": {"field": "car_model.model_name.keyword"}},
-        #         },
-        #     }
+    def resolve_root(root, info, query):
+        # data = json.dumps(
+        #     {"size": 1000, "query": {"term": {"car_model.model_name.keyword": query}}}
         # )
+        data_aggs = json.dumps(
+            {
+                "size": 1,
+                "query": {"match": {"categories.cat_parent": query}},
+                "aggs": {
+                    "categories": {"terms": {"field": "categories.cat_name.keyword"}},
+                    "brands": {"terms": {"field": "brand.brand_name.keyword"}},
+                    "engines": {"terms": {"field": "engines.engine_name.keyword"}},
+                    "car_models": {"terms": {"field": "car_model.model_name.keyword"}},
+                },
+            }
+        )
 
         r = requests.get(
             "http://localhost:9200/prod_notebook/_search",
             headers={"Content-Type": "application/json"},
-            data=data,
+            data=data_aggs,
         )
         response = r.json()
 
-        result = response["hits"]["hits"]
-        print(result[0]["_source"]["engines"])
+        result = response  # ["hits"]
+        aggs = response["aggregations"]
+        print(aggs)
 
-        # request = Search(using=es, index="prod_notebook")
-        # response = request.source(["id", "name"])
-        # for item in response:
-        #     print(item)
-        # return json.loads(result)
-        return result
+        return {"product": result, "aggregations": aggs}
 
     elastic = String()
 
