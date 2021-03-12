@@ -26,6 +26,7 @@ class SearchView(TemplateView):
 # 3. Design and create calss for inserting data into Elasticsearch
 # 4. Design and create Price model
 # 5. Design and create Stock model
+# 6. Start working with Front End
 
 
 def send_json(request):
