@@ -1,7 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene_django import DjangoListField
-from .models import Quizzes, Category, Question, Answer
+from quiz.models import Quizzes, Category, Question, Answer
 
 
 class CategoryType(DjangoObjectType):
