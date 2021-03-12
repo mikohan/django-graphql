@@ -32,6 +32,7 @@ class SearchView(TemplateView):
 # 1. Design and Create price model
 # 2. Desing and create Stock model
 # 4. Add all fields to model
+# 5. Start testing frontend
 
 
 def send_json(request):
